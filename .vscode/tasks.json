@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "build_release",
+            "command": "scons",
+            "args": [
+                "target=release",
+                "platform=windows",
+                "-j16"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "build_debug",
+            "command": "scons",
+            "args": [
+                "target=debug",
+                "platform=windows",
+                "-j16"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+        {
+            "type": "shell",
+            "label": "build_run_debug",
+            "command": "scons",
+            "args": [
+                "target=debug",
+                "platform=windows",
+                "-j16"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build"
+        },
+    ]
+}

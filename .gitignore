@@ -1,0 +1,5 @@
+build_cache
+install
+.sconsign.dblite
+*.pdb
+*.exe
