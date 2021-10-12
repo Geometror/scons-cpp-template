@@ -6,18 +6,18 @@ Import("main_env")
 Import("colors")
 
 # distinction between the debug/release variant
-if main_env['target'] == 'debug':
-    print(colors['yellow']+"---DEBUG BUILD---"+colors['end'])
+if main_env["target"] == "debug":
+    print(colors["yellow"]+"---DEBUG BUILD---"+colors["end"])
 
     if main_env["sel_platform"] == "windows":
         # MSVC
-        main_env.Append(CCFLAGS='/W3')
-        main_env.Append(CCFLAGS='/MDd')
-        main_env.Append(CCFLAGS='/Zi')
-        main_env.Append(CCFLAGS='/EHsc')
-        main_env.Append(CCFLAGS='/D_EBUG')
-        main_env.Append(CCFLAGS='/FS')
-        main_env.Append(CCFLAGS='/std:c++latest')
+        main_env.Append(CCFLAGS="/W3")
+        main_env.Append(CCFLAGS="/MDd")
+        main_env.Append(CCFLAGS="/Zi")
+        main_env.Append(CCFLAGS="/EHsc")
+        main_env.Append(CCFLAGS="/D_EBUG")
+        main_env.Append(CCFLAGS="/FS")
+        main_env.Append(CCFLAGS="/std:c++latest")
 
         main_env.Append(LINKFLAGS="/DEBUG")
 
@@ -29,32 +29,32 @@ if main_env['target'] == 'debug':
         env.Append(LINKFLAGS="-g")
 
     main_env.Append(CPPDEFINES=["DEBUG_ENABLED"])
-    main_env['variant_dir'] = "build_cache/debug/"
+    main_env["variant_dir"] = "build_cache/debug/"
 
 else:
-    print(colors['cyan']+"---RELEASE BUILD---"+colors['end'])
+    print(colors["cyan"]+"---RELEASE BUILD---"+colors["end"])
 
     if main_env["sel_platform"] == "windows":
         # MSVC
-        main_env.Append(CCFLAGS='/W1')
-        main_env.Append(CCFLAGS='/MD')
-        main_env.Append(CCFLAGS='/Zi')
-        main_env.Append(CCFLAGS='/O2')
-        main_env.Append(CCFLAGS='/EHsc')
-        main_env.Append(CCFLAGS='/DNDEBUG')
-        main_env.Append(CCFLAGS='/FS')
-        main_env.Append(CCFLAGS='/std:c++latest')
+        main_env.Append(CCFLAGS="/W1")
+        main_env.Append(CCFLAGS="/MD")
+        main_env.Append(CCFLAGS="/Zi")
+        main_env.Append(CCFLAGS="/O2")
+        main_env.Append(CCFLAGS="/EHsc")
+        main_env.Append(CCFLAGS="/DNDEBUG")
+        main_env.Append(CCFLAGS="/FS")
+        main_env.Append(CCFLAGS="/std:c++latest")
 
         main_env.Append(LINKFLAGS="/OPT:REF")
 
-        #LTO
+        # LTO
         main_env.AppendUnique(CCFLAGS="/GL")
         main_env.AppendUnique(ARFLAGS="/LTCG")
     else:
         main_env.Append(CCFLAGS="-O3")
 
-        #LTO
+        # LTO
         main_env.Append(CCFLAGS="-flto")
         main_env.Append(LINKFLAGS="-flto")
 
-    main_env['variant_dir'] = "build_cache/release/"
+    main_env["variant_dir"] = "build_cache/release/"
