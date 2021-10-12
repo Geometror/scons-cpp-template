@@ -2,4 +2,6 @@ build_cache
 install
 .sconsign.dblite
 *.pdb
+*.ilk
+*.exp
 *.exe

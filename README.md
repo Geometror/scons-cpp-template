@@ -1,2 +1,2 @@
 # scons-cpp-template
-My C++ project template using the SCons build system (WIP)
+Multiplatform C++ project template using the SCons build system (WIP)
