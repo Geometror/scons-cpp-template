@@ -10,8 +10,7 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true
+            "environment": []
         },
         {
             "name": "Run [RELEASE]",
@@ -22,8 +21,7 @@
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": true
+            "environment": []
         }
     ]
 }

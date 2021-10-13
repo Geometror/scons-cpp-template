@@ -129,6 +129,25 @@ def detect_platform(env):
             print("Automatically detected platform: " + env["sel_platform"])
 
 
+def generate_version_header(filepath, version):
+    from datetime import datetime
+    version_split = version.split(".")
+    build_time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+    lines = ["#pragma once\n",
+             "\n",
+             "//This header is automatically generated. Manual changes will be overwritten.\n",
+             "\n",
+             f"#define VERSION_MAJOR    {version_split[0]}\n",
+             f"#define VERSION_MINOR    {version_split[1]}\n",
+             f"#define VERSION_REVISION {version_split[2]}\n",
+             "\n",
+             f"#define VERSION_STR \"{version}\"\n",
+             f"#define BUILD_TIME \"{build_time}\"\n"]
+    with open(os.path.join(filepath, "version.hpp"), "w") as version_header_file:
+        version_header_file.writelines(lines)
+        print("Version info header file generated.")
+
+
 def scons_finish():
 
     # Check failures and print complete message
@@ -157,7 +176,14 @@ def scons_finish():
 ##############################################################################
 
 main_env["project_name"] = "project"
+#Version (major, minor, revision/patch)
 main_env["version"] = "0.0.0"
+
+should_generate_version_header = True
+version_header_path = "src"
+
+install_dir_path = "install"
+source_dir_path = "src"
 
 include_path = [
 
@@ -179,8 +205,6 @@ libs_release = [
 
 ]
 
-install_dir_path = "install"
-source_dir_path = "src"
 
 source_file_extensions = ("cpp", "cxx", "cc", "C", "c++", "c")
 
@@ -204,6 +228,7 @@ opts.Update(main_env)
 
 libs_path = libs_path_debug if main_env["target"] == "debug" else libs_path_release
 libs = libs_debug if main_env["target"] == "debug" else libs_release
+include_path.append(source_dir_path)
 
 # Platform specific configuration
 detect_platform(main_env)
@@ -251,6 +276,9 @@ main_env.Install(install_dir_path, prog_or_lib)
 if main_env["build_lib"] == 1:
     main_env.Install(install_dir_path + "/include",
                      "src/"+main_env["project_name"]+".hpp")
+
+if should_generate_version_header:
+    generate_version_header(version_header_path, main_env["version"])
 
 # Measure build time/print info at the end
 atexit.register(scons_finish)
